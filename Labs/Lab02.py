@@ -30,19 +30,26 @@ with open("datapoints.txt", 'r') as reader:                # Read and print the 
         
         pokList.append(myPok.copy())                # put the pokemon into the pokeList
                                                     # and yeah, you have to use copy
+        if myPok[ "clss" ] == 0:
+            pchuX.append(myPok[ "wdth" ])
+            pchuY.append(myPok[ "lgth" ])
+        else:
+            pkachX.append(myPok[ "wdth" ])
+            pkachY.append(myPok[ "lgth" ])
+
         line = reader.readline()                    # # read in next line from file, before repeating 
 
 vctrPok =  np.array(pokList)      
 # print(vctrPok)                                          
 # pokList = sorted(pokList, key=lambda k: (k["wdth"], k["lgth"]))                                                   
 
-for pok in pokList:                                 # work through pokemon list
-    if pok[ "clss" ] == 0:                          # if a pichu
-                                                    # plot pichu with blue at point width, length
-        plt.plot((pok["wdth"]), (pok["lgth"]), 'bo')
-    else:                                           # else it's a pikachu
-                                                    # plot pikachu with red at point width, length
-        plt.plot((pok["wdth"]), (pok["lgth"]), 'ro')
+#for pok in pokList:                                 # work through pokemon list
+#    if pok[ "clss" ] == 0:                          # if a pichu
+#                                                    # plot pichu with blue at point width, length
+#        plt.plot((pok["wdth"]), (pok["lgth"]), 'bo')
+#    else:                                           # else it's a pikachu
+#                                                    # plot pikachu with red at point width, length
+#        plt.plot((pok["wdth"]), (pok["lgth"]), 'ro')
     #print(pok["wdth"], pok["lgth"], pok["clss"])
 
 #plt.show()                                          # show graph
@@ -69,7 +76,7 @@ for pok in pokList:                                 # work through pokemon list
 # else:
 #   testpoint pikachu 
 # print(min(points, key=lambda point: math.hypot(target[1]-point[1], target[0]-point[0])))
-
+# 
                                                      
 
 
