@@ -11,19 +11,8 @@ poke ={                                             # dictionary  pokemon
     "distance"  :   0.0                             # distance
 }                                                   
 
-def get_num():                                      # function for getting a numerical input                                      
-                                                                
-    isnum = False                                   # a boolean trigger set to false
-    while not isnum:                                # as long as isnum is false
-        inmat = input("Please, enter a number : ")  # it will keep asking for a numeric input
-        if float(inmat):                       # if the input is numeric, isnum is set to true, stopping the loop
-            isnum = True
-        else:                                       # else the user is made aware of the mistake, and the loop runs again
-            print("That's not a number")  
-    return float(inmat)                             # when the function is done it returns users numerical input 
-                                                    # in float format
-                                                    
-    
+
+                                            
 def sortByDist(list, x, y):
     
     for p in list:                                  # for each element in list
@@ -80,26 +69,36 @@ def accTest(list):
     accuracy = (trueNeg + truePos)/(trueNeg + truePos + falseNeg + falsePos)
 
     return accuracy
+    
         
+
+def listFromFile(filename):
+    list = []
+    with open(filename, 'r') as reader:                 # Read and print the entire file line by line "datapoints.txt"
+        line = reader.readline()                        # The first line we read is not of interest
+        line = reader.readline()                        # The second line is the first pokemon
+                                                        # if that line is empty, the file is empty, 
+                                                        # we don't go into the loop
+        while line != '':                               # The EOF char is an empty string
+            text = line.split(", ")                     # split upp string at and removing ', ' 
+            poke[ "width"  ] = float(text[0])           # and put the parts in a list of 3 strings
+            poke[ "length" ] = float(text[1])           # putting each part in the corresponding 
+            poke[ "class"  ] =   int(text[2])           # part of dictionary
+            
+            list.append(poke.copy())                    # put the pokemon into the pokeList
+                                                        # and yeah, you have to use copy
+                
+            line = reader.readline()
+
+    return list
+
+
 
 
 # Main -------------------------------------------------------------------------------------------
 
-with open("datapoints.txt", 'r') as reader:         # Read and print the entire file line by line
-    line = reader.readline()                        # The first line we read is not of interest
-    line = reader.readline()                        # The second line is the first pokemon
-                                                    # if that line is empty, the file is empty, 
-                                                    # we don't go into the loop
-    while line != '':                               # The EOF char is an empty string
-        text = line.split(", ")                     # split upp string at and removing ', ' 
-        poke[ "width"  ] = float(text[0])           # and put the parts in a list of 3 strings
-        poke[ "length" ] = float(text[1])           # putting each part in the corresponding 
-        poke[ "class"  ] =   int(text[2])           # part of dictionary
-        
-        pokList.append(poke.copy())                 # put the pokemon into the pokeList
-                                                    # and yeah, you have to use copy
-            
-        line = reader.readline()                    # read in next line from file, before repeating 
+                                                    # read in next line from file, before repeating 
+pokList = listFromFile("datapoints.txt")
 
 i = 0
 while i != 10:                                      # a while loop that runs 10 times

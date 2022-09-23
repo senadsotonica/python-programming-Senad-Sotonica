@@ -1,7 +1,6 @@
 import matplotlib.pyplot as plt
 import math
 
-pokList = []                                        # list of myPok
 
 poke ={                                             # dictionary  pokemon
     "width"     :   0.0,                            # width
@@ -57,23 +56,31 @@ def whichIsIt(list):
         return False
         
 
+def listFromFile(filename):
+    list = []
+    with open(filename, 'r') as reader:                 # Read and print the entire file line by line "datapoints.txt"
+        line = reader.readline()                        # The first line we read is not of interest
+        line = reader.readline()                        # The second line is the first pokemon
+                                                        # if that line is empty, the file is empty, 
+                                                        # we don't go into the loop
+        while line != '':                               # The EOF char is an empty string
+            text = line.split(", ")                     # split upp string at and removing ', ' 
+            poke[ "width"  ] = float(text[0])           # and put the parts in a list of 3 strings
+            poke[ "length" ] = float(text[1])           # putting each part in the corresponding 
+            poke[ "class"  ] =   int(text[2])           # part of dictionary
+            
+            list.append(poke.copy())                    # put the pokemon into the pokeList
+                                                        # and yeah, you have to use copy
+                
+            line = reader.readline()
+
+    return list
+
+
+
 # Main -------------------------------------------------------------------------------------------
 
-with open("datapoints.txt", 'r') as reader:         # Read and print the entire file line by line
-    line = reader.readline()                        # The first line we read is not of interest
-    line = reader.readline()                        # The second line is the first pokemon
-                                                    # if that line is empty, the file is empty, 
-                                                    # we don't go into the loop
-    while line != '':                               # The EOF char is an empty string
-        text = line.split(", ")                     # split upp string at and removing ', ' 
-        poke[ "width"  ] = float(text[0])           # and put the parts in a list of 3 strings
-        poke[ "length" ] = float(text[1])           # putting each part in the corresponding 
-        poke[ "class"  ] =   int(text[2])           # part of dictionary
-        
-        pokList.append(poke.copy())                 # put the pokemon into the pokeList
-                                                    # and yeah, you have to use copy
-            
-        line = reader.readline()                    # read in next line from file, before repeating 
+pokList = listFromFile("datapoints.txt")
                                                                                           
 
 print("Enter weight and length of your pokemon.")
