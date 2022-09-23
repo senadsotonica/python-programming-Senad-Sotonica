@@ -1,11 +1,11 @@
 import matplotlib.pyplot as plt
 import math
 
-pokList = []                                        # list of myPok
-pchuX   = []
-pchuY   = [] # list of pichus
-pkachX  = []
-pkachY  = []# list of pikachus
+pokList = [] # list of pokemons    
+pchuX   = [] # list of pichus X
+pchuY   = [] # list of pichus Y
+pkachX  = [] # list of pikachus X
+pkachY  = [] # list of pikachus Y
 
 poke ={                                             # dictionary  pokemon
     "width"  :   0.0,                               # width
@@ -23,6 +23,26 @@ def visa(x1, y1, x2, y2, txt1, txt2):               # plotting x1,y1 and x2,y2 w
     plt.xlabel(txt1)
     plt.ylabel(txt2)
     plt.show() 
+
+
+
+def whichClass(list, poke):
+    
+    first = True                                    # first run in for loop set true
+    for p in list:                                  # run through elements in list
+                                                    # calculate distance from pokemon to current element p in list
+            distance = math.dist([poke["width"], poke["length"]], [p["width"], p["length"]])
+            
+            if  first or distance < shortest:       # if first distance or distance is shorter than shortest
+                shortest = distance                 # set shorter to distance
+                if p["class"] == 0:                 # set text in pClass to appropriate class
+                    text = "Pichu" 
+                else: 
+                    text = "Pikachu"
+                first = False                       # set first to false when first element in list is checked
+                
+    return text                                     # return text with the appopriate class
+
 
 
 # Main -------------------------------------------------------------------------------------------
@@ -60,23 +80,14 @@ with open("testpoints.txt", 'r') as reader:         # open testpoints file
         
         text = line.split()                         # spliting the line, I only need 2nd and 3rd bit
 
-    # I borrowed and modified this bit of magic, cleans the strings from non alphanumerical chars except '.'
+        # I borrowed and modified this bit of magic, cleans the strings from non alphanumerical chars except '.'
         poke["width"] = float(''.join(letter for letter in text[1] if (letter.isalnum() or letter == '.')))  # weight in float 
         poke["length"] = float(''.join(letter for letter in text[2] if (letter.isalnum() or letter == '.')))  # length in float
-    # https://www.geeksforgeeks.org/python-removing-unwanted-characters-from-string/ 
+        # https://www.geeksforgeeks.org/python-removing-unwanted-characters-from-string/ 
         
-        first = True                                # first run in for loop set true
-        for p in pokList:                           # run through plist
-                                                    # calculate distance from pokemon to current element in pokelist
-            distance = math.dist([poke["width"], poke["length"]], [p["width"], p["length"]])
-            if  first or distance < shortest:       # if first distance or distance is shorter than shortes
-                shortest = distance                 # set shorter to distance
-                if p["class"] == 0:                 # set text in pClass to appropriate class
-                    pClass ="Pichu" 
-                else: 
-                    pClass ="Pikachu"
-                first = False                       # set first to false when first element in list is checked
-        print("Pokemon:", poke, " är en ", pClass)
+        pokClass = whichClass(pokList, poke)
+        
+        print("Pokemon:", poke, " är en ", pokClass)# print current pokemon from testfile and which class it belongs to
 
         line = reader.readline()                    # read next line from file
 

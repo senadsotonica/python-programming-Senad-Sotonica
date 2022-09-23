@@ -9,6 +9,8 @@ poke ={                                             # dictionary  pokemon
     "distance"  :   0.0                             # distance
 }                                                   
 
+
+
 def get_num():                                      # function for getting a numerical input                                      
                                                                 
     isnum = False                                   # a boolean trigger set to false
@@ -18,18 +20,11 @@ def get_num():                                      # function for getting a num
             isnum = True
         else:                                       # else the user is made aware of the mistake, and the loop runs again
             print("That's not a number")  
+    
     return float(inmat)                             # when the function is done it returns users numerical input 
                                                     # in float format
                                                     
 
-def visa(x1, y1, x2, y2, txt1, txt2):               # plotting x1,y1 and x2,y2 with labels txt1 and txt2
-    
-    plt.plot(x1, y1, 'ro')                          # plot all pichu X,Ys with red dots
-    plt.plot(x2, y2, 'bo')                          # plot all pikachu X,Ys with blue dots
-    plt.xlabel(txt1)
-    plt.ylabel(txt2)
-    plt.show() 
-    
 
 def sortByDist(list, x, y):
     
@@ -39,6 +34,7 @@ def sortByDist(list, x, y):
                                                        
     newlist = sorted(pokList, key=lambda d: d["distance"])
     return newlist                                  # return the a list with the elements sorted by distance
+
 
 
 def whichIsIt(list):
@@ -54,6 +50,7 @@ def whichIsIt(list):
         return True
     else:                                           # else return false
         return False
+        
         
 
 def listFromFile(filename):
@@ -74,26 +71,26 @@ def listFromFile(filename):
                 
             line = reader.readline()
 
-    return list
+    return list                                         # return list
 
 
 
 # Main -------------------------------------------------------------------------------------------
 
-pokList = listFromFile("datapoints.txt")
+pokList = listFromFile("datapoints.txt")                # create a list of pokemons from file
                                                                                           
 
 print("Enter weight and length of your pokemon.")
 print("width please:")
-width = get_num()                                   # get width from user
+width = get_num()                                       # get width from user
 print("Length please:")
-length = get_num()                                  # get length from user
+length = get_num()                                      # get length from user
 
-distList = sortByDist(pokList, width, length)       # sort pokemons by distance from the users pokemon width,length point 
+distList = sortByDist(pokList, width, length)           # sort pokemons by distance from the users pokemon width,length point 
 
 
-if whichIsIt(distList):                             # check the 10 closest, to decide by majority wich class the pokemon is
-    print("It's a pichu!")                          # if equal vote the function will return false value
+if whichIsIt(distList):                                 # check the 10 closest, to decide by majority wich class the pokemon is
+    print("It's a pichu!")                              # if equal vote the function will return false value
 else:
-    print("It's a pikachu!")                        # so it's slightly biased towards pikachu
+    print("It's a pikachu!")                            # so it's slightly biased towards pikachu
 
