@@ -79,8 +79,8 @@ def whichClass(p, list):                                    # check which class 
             distance = math.dist([p["width"], p["length"]], [i["width"], i["length"]])
             
             if  first or distance < shortest:               # if it is the first distance or the distance is shorter than shortest distance
-                shortest = distance                             # set shortest to distance and
-                if i["class"] == 0:                             # set value in pokemon p["class"] to appropriate class
+                shortest = distance                         # set shortest to distance and
+                if i["class"] == 0:                         # set value in pokemon p["class"] to appropriate class
                     p["class"] = 0 
                 else: 
                     p["class"] = 1
@@ -187,9 +187,9 @@ def letUserType(list):
     distList = sortByDist(list, width, length)              # sort pokemons in a new list by distance from the users pokemon width,length point 
 
     if voting(distList):                                    # check the 10 closest, to decide by majority wich class the pokemon is
-        print("\nIt's a pichu!")                              # if equal vote the function will return false value
+        print("\nIt's a pichu!")                            # if equal vote the function will return false value
     else:
-        print("\nIt's a pikachu!")                            # so it's slightly biased towards pikachu
+        print("\nIt's a pikachu!")                          # so it's slightly biased towards pikachu
 
 
 #----- accTest          -----   -----                   -----                  -----   -----                   -----                  -----   -----
