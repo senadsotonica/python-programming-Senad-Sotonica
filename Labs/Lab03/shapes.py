@@ -1,3 +1,4 @@
+from mpl_toolkits.mplot3d.art3d import Poly3DCollection, Line3DCollection
 from mpl_toolkits.mplot3d import Axes3D
 import matplotlib.pyplot as plt
 import numpy as np
@@ -283,7 +284,7 @@ class Sphere(Shape3d, Circle):                                    # a sphere inh
 
    def show(self):                                                # copy paste from
       plt.rcParams["figure.figsize"] = [7.00, 3.50]               # https://www.tutorialspoint.com/plotting-points-on-the-surface-of-a-sphere-in-python-s-matplotlib
-      plt.rcParams["figure.autolayout"] = True
+      plt.rcParams["figure.autolayout"] = True                    # modified itsy bitsy by me
       fig = plt.figure()
       ax = fig.add_subplot(projection='3d')
       u, v = np.mgrid[0:2 * np.pi:30j, 0:np.pi:20j]
@@ -299,7 +300,6 @@ class Sphere(Shape3d, Circle):                                    # a sphere inh
 class Cuboid(Shape3d, Rect):                                      # inherit shape3d and rectangle
    def __init__(self, side_a =1, side_b =1 ,
                side_c =1, x = 0, y = 0, z = 0):
-
       Rect.__init__(self, side_a, side_b, x, y)                   # manifest rectangle
       self._side_c = side_c
       volume = self._area * side_c
@@ -352,11 +352,38 @@ class Cuboid(Shape3d, Rect):                                      # inherit shap
       else:
          return False
       
-   def show(self):                                                # copy paste from https://www.geeksforgeeks.org/how-to-draw-3d-cube-using-matplotlib-in-python/
-      sides = [self._side_a, self._side_b, self._side_c]
-      data = np.ones(sides)                                       # Creating data points for the sides
-      fig = plt.figure(figsize=(9, 9))                            # Creating the figure object
-      ax = fig.add_subplot(111 , projection = '3d')               # Creating axes object to the plot
-      ax.voxels(data, facecolors="blue")                          # Plotting the figure  
-      plt.show()                                                  # Displaying the figure
+   def show(self):                                                # modified from https://www.pythonpool.com/matplotlib-draw-rectangle/
+      xlow  = self.x - (self._side_a / 2)                         
+      xhigh = self.x + (self._side_a / 2)                         # calculating x y z positions
+      ylow  = self.y - (self._side_b / 2)                         # of the 8 corners of the cuboid
+      yhigh = self.y + (self._side_b / 2)
+      zlow  = self.z - (self._side_c / 2)
+      zhigh = self.z + (self._side_c / 2)
+      points = np.array([                                         # establishing the coordinates
+                  [xlow, ylow, zlow],                             # and they have to be in this order
+                  [xhigh, ylow, zlow],                            # or it will not be a cuboid, been there, done that
+                  [xhigh, yhigh, zlow],                           # I suspect it has something to do with the
+                  [xlow, yhigh, zlow],                            # order of Zs in verts
+                  [xlow, ylow, zhigh],
+                  [xhigh, ylow, zhigh],
+                  [xhigh, yhigh, zhigh],
+                  [xlow, yhigh, zhigh]])
+      Z = points                                                  # Z is way shorter to type than points :)
+      fig = plt.figure()
+      ax = fig.add_subplot(111, projection='3d')
+      r = [-1,1]
+      X, Y = np.meshgrid(r, r)
+      ax.scatter3D(Z[:, 0], Z[:, 1], Z[:, 2])
+      verts = [[Z[0],Z[1],Z[2],Z[3]],                             # points go in here
+               [Z[4],Z[5],Z[6],Z[7]],                             
+               [Z[0],Z[1],Z[5],Z[4]],
+               [Z[2],Z[3],Z[7],Z[6]],
+               [Z[1],Z[2],Z[6],Z[5]],
+               [Z[4],Z[7],Z[3],Z[0]]]
+      ax.add_collection3d(Poly3DCollection(verts, facecolors='cyan', linewidths=1, edgecolors='r', alpha=.20))
+      ax.set_xlabel('X')
+      ax.set_ylabel('Y')
+      ax.set_zlabel('Z')
+      plt.show()                                                  # show cube                                                   
+      
       
