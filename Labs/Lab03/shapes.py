@@ -39,6 +39,7 @@ class Shape:
          self._area, self.circmf, self.x, self.y)
 
    def __eq__(self, other) -> bool:                               # overloading == to be able to compare shapes
+      print("test")
       if type(self) == type(other):                               # if shapes are of same type return true
          return True
       else:
@@ -125,8 +126,8 @@ class Circle(Shape):                                              # Circle is a 
    def show(self):                                                # showing circle in x y diagram
       fig, ax  = plt.subplots()                                   # won't work without fig
       lim      = self._r * 2                                      # setting the range of x and y axis to 
-      plt.xlim([- lim, lim])                                      # from negative double to double radius
-      plt.ylim([- lim, lim])                                      # making sure the whole circle shows
+      plt.xlim([self.x - lim, self.x + lim])                      # from negative double to double radius
+      plt.ylim([self.y - lim, self.y + lim])                      # making sure the whole circle shows
       plt.axis('equal')                                           # setting equal presentation  of axis, so the circle doesn't look oval 
       ax.add_patch(plt.Circle((self.x, self.y ), self._r,         # add circle to plot, set fill to false, making the circle hollow
                    fill = False ))                                
@@ -182,8 +183,8 @@ class Rect(Shape):
       fig, ax  = plt.subplots()                                   # won't work without fig
       xlim     = self._side_a * 2
       ylim     = self._side_b * 2                                      
-      plt.xlim([- xlim, xlim])                                    # setting the range of x axis
-      plt.ylim([- ylim, ylim])                                    # setting the range of y axis
+      plt.xlim([self.x - xlim, self.x + xlim])                    # setting the range of x axis
+      plt.ylim([self.y - ylim, self.y + ylim])                    # setting the range of y axis
       plt.axis('equal')                                           # setting equal presentation  of axis
       x = self.x - self._side_a / 2                               # adjousting x for plot
       y = self.y - self._side_b / 2                               # adjousting y for plot
@@ -200,9 +201,6 @@ class Shape3d(Shape):                                             # inherit shap
       self._volume = volume
       self.z       = z
 
-   def __eq__(self, other) -> bool:                               # inherited overloading == to be able to compare shapes
-      pass
-
    def __gt__(self, other) -> bool:                               # overloading > to compare volume of shapes
       if self._volume > other._volume:
          return True
@@ -210,21 +208,18 @@ class Shape3d(Shape):                                             # inherit shap
          return False
 
    def __ge__(self, other) -> bool:                               # overloading >=
-
       if self._volume >= other._volume:
          return True
       else:
          return False
 
    def __lt__(self, other) -> bool:                               # overloading <
-
       if self._volume < other._volume:
          return True
       else:
          return False
 
    def __le__(self, other) -> bool:                               # overloading <= 
-
       if self._volume <= other._volume:
          return True
       else:
@@ -291,11 +286,10 @@ class Sphere(Shape3d, Circle):                                    # a sphere inh
       plt.rcParams["figure.autolayout"] = True
       fig = plt.figure()
       ax = fig.add_subplot(projection='3d')
-      r = 0.05
       u, v = np.mgrid[0:2 * np.pi:30j, 0:np.pi:20j]
-      x = self._r * np.cos(u) * np.sin(v)
-      y = self._r * np.sin(u) * np.sin(v)
-      z = self._r * np.cos(v)
+      x = self._r * np.cos(u) * np.sin(v) + self.x
+      y = self._r * np.sin(u) * np.sin(v) + self.y
+      z = self._r * np.cos(v) + self.z
       ax.plot_surface(x, y, z, cmap=plt.cm.YlGnBu_r)
       plt.show()
 
