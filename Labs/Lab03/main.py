@@ -3,21 +3,27 @@ import sys
 
 sys.path.append(".")
 
+from shapes import Shape
 from shapes import Circle
 from shapes import Rect
+from shapes import Sphere
+from shapes import Cuboid
+
+
+
+cuboid = Cuboid()
+cuboid.side_c = 4
+cuboid.show()
 
 
 
 
-circle = Circle()
-print(circle.is_unit_circ())
-circle.translate(3,3)
-print(circle.is_unit_circ())
-print(type(circle))
-print(circle.iam())
 
-rect = Rect()
-print(rect > circle)
-print(rect.area)
-print(circle.area)
-print(rect.is_sqr())
+
+
+
+
+
+
+
+
