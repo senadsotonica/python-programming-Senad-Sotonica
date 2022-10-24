@@ -36,11 +36,10 @@ class Shape:
          self._area, self.circmf, self.x, self.y)
 
    def __str__(self) -> str:                                      # attributes in a string clearified
-      return "\narea: %s,\ncircumference: %s,\npos: %s, %s\n" % (
-         self._area, self.circmf, self.x, self.y)
+      return "area: %s circumference: %s pos: %s, %s\n" % (
+         round(self._area, 2), round(self.circmf, 2), self.x, self.y)
 
    def __eq__(self, other) -> bool:                               # overloading == to be able to compare shapes
-      print("test")
       if type(self) == type(other):                               # if shapes are of same type return true
          return True
       else:
@@ -106,7 +105,7 @@ class Circle(Shape):                                              # Circle is a 
          Shape.i_am(self), self._r, Shape.__repr__(self))
 
    def __str__(self) -> str:                                      # attributes with clarification in a string
-      return "\nclass: %s\nradius: %s, %s" % (
+      return "\nclass: %s radius: %s %s" % (
          Shape.i_am(self), self._r, Shape.__str__(self))
 
 
@@ -171,7 +170,7 @@ class Rect(Shape):
          Shape.i_am(self), self._side_a, self._side_b, Shape.__repr__(self))
 
    def __str__(self) -> str:                                      # attributes as string clearified
-      return "\nclass: %s\nside a: %s\nside b: %s, %s" % (
+      return "\nclass: %s side a: %s side b: %s %s" % (
          Shape.i_am(self), self._side_a, self._side_b, Shape.__str__(self))
 
    def is_sqr(self) -> bool:                                      # is the rectangle a square
@@ -238,8 +237,8 @@ class Shape3d(Shape):                                             # inherit shap
          self._volume, self.x, self.y, self.z)
 
    def __str__(self):                                             # attributes as string clearified
-      return "\nvolume: %s\nposition: %s, %s, %s\n" % (
-         self._volume, self.x, self.y, self.z)
+      return "volume: %s position: %s, %s, %s\n" % (
+         round(self._volume, 2), self.x, self.y, self.z)
 
    
 
@@ -253,7 +252,7 @@ class Sphere(Shape3d, Circle):                                    # a sphere inh
 
    @property
    def r(self):
-      pass
+      return self._r
 
    @r.setter
    def r(self, r):                                                # changing value of r 
@@ -265,7 +264,7 @@ class Sphere(Shape3d, Circle):                                    # a sphere inh
          Shape.i_am(self), self._r, Shape3d.__repr__(self))
    
    def __str__(self) -> str:                                      # attributes as a string clarified
-      return "\nclass: %s\nradius: %s, %s" % (
+      return "\nclass: %s radius: %s, %s" % (
          Shape.i_am(self), self._r, Shape3d.__str__(self))
 
    def is_unit(self) -> bool:                                     # is sphere a unit sphere
@@ -306,15 +305,15 @@ class Cuboid(Shape3d, Rect):                                      # inherit shap
       Shape3d.__init__(self, volume, z)                           # manifest 3rd dimension
 
    def __repr__(self) -> str:                                     # attributes as string
-      return "%s %s %s %s %s %s %s %s" % (
+      return "%s %s %s %s %s %s %s %s %s" % (
                 self._side_a, self._side_b, self._side_c,
                  self._volume,
                   self.x, self.y, self.z)
 
    def __str__(self) -> str:                                      # attributes as a string clarified
-      return "\nclass: %s\nside a: %s\nside b: %s\nside c: %s\nvolume: %s\npos: %s, %s, %s""" % (
+      return "\nclass: %s side a: %s side b: %s side c: %s volume: %s pos: %s, %s, %s\n""" % (
          Shape.i_am(self), self._side_a, self._side_b, self._side_c,
-                   self._volume, self.x, self.y, self.z)
+                   self._volume, self.x, self.y, self.z)          # this is an alternative to calling Shape3d._str_(self)
 
    @property
    def side_a(self):
